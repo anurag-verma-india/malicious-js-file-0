@@ -11,6 +11,7 @@
      Location="http://x.com/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>`;
 
 
+
      $.post('/admin/uac/identityprovider/add/', {
          csrfmiddlewaretoken: Cookies.get('csrftoken'),
          name: name,
